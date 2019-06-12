@@ -48,29 +48,29 @@ Flight::route('POST /pets', function(){
 Flight::route('POST /services', function(){
     $request = Flight::request()->data->getData();
     if (isset($request['serviceID']) && $request['serviceID'] !=''){
-        $update = "UPDATE services SET idServices = :idServices, Name = :name, City = :city, Address = :address, Type = :type, WorkingTime = :WorkingTime WHERE idServices=:id";
+        $update = "UPDATE services SET Name = :Name, City = :City, Address = :Address, Type = :Type, WorkingTime = :WorkingTime WHERE idServices=:id";
         $stmt= Flight::db()->prepare($update);
         $stmt->execute($request);
-        Flight::json(['message' => "Service ".$request['name']." has been updated successfully"]);
+        Flight::json(['message' => "Service ".$request['Name']." has been updated successfully"]);
     }else{
-        unset($request['id']);
-        $insert = "INSERT INTO services (idServices, Name, City, Address, Type, WorkingTime) VALUES(:idServices, :Name, :City, :Address, :Type, :WorkingTime)";
+        unset($request['serviceID']);
+        $insert = "INSERT INTO services (Name, City, Address, Type, WorkingTime) VALUES(:idServices, :Name, :City, :Address, :Type, :WorkingTime)";
         $stmt= Flight::db()->prepare($insert);
         $stmt->execute($request);
-        Flight::json(['message' => "Service ".$request['name']." has been added successfully"]);
+        Flight::json(['message' => "Service ".$request['Name']." has been added successfully"]);
     }
 });
 
 Flight::route('POST /appointments', function(){
     $request = Flight::request()->data->getData();
     if (isset($request['idappointments']) && $request['idappointments'] !=''){
-        $update = "UPDATE appointments SET idappointments= :idappointments, serviceID = :serviceID, City = :city, userID = :userID, Time = :time, RequestApproved = :requestApproved WHERE id=:id";
+        $update = "UPDATE appointments SET serviceID = :serviceID, City = :city, userID = :userID, Time = :time, RequestApproved = :requestApproved WHERE id=:id";
         $stmt= Flight::db()->prepare($update);
         $stmt->execute($request);
         Flight::json(['message' => "Appointment ".$request['idappointments']." has been updated successfully"]);
     }else{
         unset($request['idappointments']);
-        $insert = "INSERT INTO appointments (idappointments, serviceID, City, userID, Time, RequestApproved) VALUES( :idappointments, :serviceID, :city, :userID, :time, :requestApproved)";
+        $insert = "INSERT INTO appointments (serviceID, City, userID, Time, RequestApproved) VALUES( :serviceID, :city, :userID, :time, :requestApproved)";
         $stmt= Flight::db()->prepare($insert);
         $stmt->execute($request);
         Flight::json(['message' => "Appointments ".$request['idappointments']." has been added successfully"]);

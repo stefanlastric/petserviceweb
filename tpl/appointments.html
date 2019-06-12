@@ -1,10 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Appointments</title>
-</head>
-<body>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Appointment</h1>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <i class="fas fa-plus fa-sm text-white-50"></i> Add Appointment
+    </button>
 
-</body>
-</html>
+</div>
+
+<div id="appointments_container" class="row">
+
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enter Appointment info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form method="POST" action="rest/appointments">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ServiceID</label>
+                        <input name="serviceID" type="number" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input name="age" type="number" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Adoptime</label>
+                        <input name="adopttime" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <input name="type" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <input name="gender" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input name="city" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Sterilizied</label>
+                        <input name="sterilized" type="text" class="form-control">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $.get( "rest/appointments", function( data ) {
+        console.log(data);
+        $('#appointments_container').html('');
+        for(var i=0 ; i < data.length; i++){
+            $('#appointments_container').append(appointments2html(data[i]));
+        }
+    });
+
+    function appointments2html(appointments){
+        var appointments_html = $('#appointments_template').html();
+        appointments_html = appointments_html.replace('{{serviceID}}', appointments.serviceID);
+        appointments_html = appointments_html.replace('{{City}}', appointments.City);
+        appointments_html = appointments_html.replace('{{userID}}', appointments.userID);
+        appointments_html = appointments_html.replace('{{Time}}', appointments.Time);
+        appointments_html = appointments_html.replace('{{RequestApproved}}', appointments.RequestApproved);
+        return appointments_html;
+    }
+</script>
+<script id="appointments_template" type="html/template">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{Name}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">serviceID: {{serviceID}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">City: {{City}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">userID: {{userID}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Time: {{Time}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">RequestApproved: {{RequestApproved}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" class="btn btn-warning btn-circle">
+                            <i class="fas fa-edit"></i>
+                        </a><br><br>
+                        <a href="#" class="btn btn-danger btn-circle">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
