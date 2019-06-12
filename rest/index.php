@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Created by PhpStorm.
@@ -31,32 +32,32 @@ Flight::route('GET /appointments', function(){
 Flight::route('POST /pets', function(){
     $request = Flight::request()->data->getData();
     if (isset($request['id']) && $request['id'] !=''){
-        $update = "UPDATE pets SET id= :id, Name= :name, Age = :age, Adopttime = :adopttime, Type = :type, City = :city, Gender = :gender, Sterilized = :sterilized WHERE id=:id";
+        $update = "UPDATE pets SET Name= :name, Age = :age, Adopttime = :adopttime, Type = :type, City = :city, Gender = :gender, Sterilized = :sterilized WHERE id=:id";
         $stmt= Flight::db()->prepare($update);
         $stmt->execute($request);
-        Flight::json(['message' => "Pet ".$request['Name']." has been updated successfully"]);
+        Flight::json(['message' => "Pet ".$request['name']." has been updated successfully"]);
     }else{
         unset($request['id']);
-        $insert = "INSERT INTO pets (id, Name, Age, Adopttime, Type, City, Gender, Sterilized) VALUES(:id, :Name, :Age, :Adopttime, :Type, :City, :Gender, :Sterilized)";
+        $insert = "INSERT INTO pets (Name, Age, Adopttime, Type, City, Gender, Sterilized) VALUES(:name, :age, :adopttime, :type, :city, :gender, :sterilized)";
         $stmt= Flight::db()->prepare($insert);
         $stmt->execute($request);
-        Flight::json(['message' => "Pet ".$request['Name']." has been added successfully"]);
+        Flight::json(['message' => "Pet ".$request['name']." has been added successfully"]);
     }
 });
 
 Flight::route('POST /services', function(){
     $request = Flight::request()->data->getData();
     if (isset($request['serviceID']) && $request['serviceID'] !=''){
-        $update = "UPDATE services SET idServices = :idServices, Name = :name, City = :city, Adddress = :address, Type = :type, WorkingTime = :WorkingTime WHERE idServices=:id";
+        $update = "UPDATE services SET idServices = :idServices, Name = :name, City = :city, Address = :address, Type = :type, WorkingTime = :WorkingTime WHERE idServices=:id";
         $stmt= Flight::db()->prepare($update);
         $stmt->execute($request);
-        Flight::json(['message' => "Service ".$request['Name']." has been updated successfully"]);
+        Flight::json(['message' => "Service ".$request['name']." has been updated successfully"]);
     }else{
         unset($request['id']);
-        $insert = "INSERT INTO services (idServices, Name, City, Adddress, Type, WorkingTime) VALUES(:idServices, :Name, :City, :Address, :Type, :WorkingTime)";
+        $insert = "INSERT INTO services (idServices, Name, City, Address, Type, WorkingTime) VALUES(:idServices, :Name, :City, :Address, :Type, :WorkingTime)";
         $stmt= Flight::db()->prepare($insert);
         $stmt->execute($request);
-        Flight::json(['message' => "Service ".$request['Name']." has been added successfully"]);
+        Flight::json(['message' => "Service ".$request['name']." has been added successfully"]);
     }
 });
 
@@ -132,16 +133,16 @@ Flight::route('GET /services/@id', function($id){
 Flight::route('POST /lost_pets', function(){
     $request = Flight::request()->data->getData();
     if (isset($request['idlost_pets']) && $request['idlost_pets'] !=''){
-        $update = "UPDATE lost_pets SET idlost_pets= :idlost_pets, Name = :name, Type = :type, City = :city, Contact = :contact, Reward = :reward WHERE id=:id";
+        $update = "UPDATE lost_pets SET Name = :name, Type = :type, Ownername = :ownername, City = :city, Contact = :contact, Reward = :reward WHERE idlost_pets=:id";
         $stmt= Flight::db()->prepare($update);
         $stmt->execute($request);
-        Flight::json(['message' => "Lost pet ".$request['Name']." has been updated successfully"]);
+        Flight::json(['message' => "Lost pet ".$request['name']." has been updated successfully"]);
     }else{
         unset($request['idlost_pets']);
-        $insert = "INSERT INTO lost_pets (idlost_pets, Name, Type, City, Contact, Reward) VALUES( :idlost_pets, :name, :type, :city, :contact, :reward)";
+        $insert = "INSERT INTO lost_pets (Name, Type,Ownername, City, Contact, Reward) VALUES(:name, :type, :ownername, :city, :contact, :reward)";
         $stmt= Flight::db()->prepare($insert);
         $stmt->execute($request);
-        Flight::json(['message' => "Lost pet ".$request['Name']." has been added successfully"]);
+        Flight::json(['message' => "Lost pet ".$request['name']." has been added successfully"]);
     }
 });
 Flight::start();

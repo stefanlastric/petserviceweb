@@ -1,10 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lost Pets</title>
-</head>
-<body>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Lost Pets</h1>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <i class="fas fa-plus fa-sm text-white-50"></i> Add Lost Pet
+    </button>
 
-</body>
-</html>
+</div>
+
+<div id="lost_pets_container" class="row">
+
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enter Lost Pet info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form method="POST" action="rest/lost_pets">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input name="name" type="text" class="form-control">
+                    </div>
+                   <div class="form-group">
+                        <label>Type</label>
+                        <input name="type" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Owner's Name</label>
+                        <input name="ownername" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input name="city" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact</label>
+                        <input name="contact" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Reward</label>
+                        <input name="reward" type="text" class="form-control">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $.get( "rest/lost_pets", function( data ) {
+        console.log(data);
+        $('#lost_pets_container').html('');
+        for(var i=0 ; i < data.length; i++){
+            $('#lost_pets_container').append(lost_pet2html(data[i]));
+        }
+    });
+
+    function lost_pet2html(lost_pet){
+        var lost_pet_html = $('#lost_pet_template').html();
+        lost_pet_html = lost_pet_html.replace('{{Name}}', lost_pet.Name);
+        lost_pet_html = lost_pet_html.replace('{{Type}}', lost_pet.Type);
+        lost_pet_html = lost_pet_html.replace('{{Ownername}}', lost_pet.Ownername);
+        lost_pet_html = lost_pet_html.replace('{{City}}', lost_pet.City);
+        lost_pet_html = lost_pet_html.replace('{{Contact}}', lost_pet.Contact);
+        lost_pet_html = lost_pet_html.replace('{{Reward}}', lost_pet.Reward);
+        return lost_pet_html;
+    }
+</script>
+
+<script id="lost_pet_template" type="html/template">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{Name}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Type: {{Type}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Ownername: {{Ownername}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">City: {{City}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Contact: {{Contact}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Reward: {{Reward}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" class="btn btn-warning btn-circle">
+                            <i class="fas fa-edit"></i>
+                        </a><br><br>
+                        <a href="#" class="btn btn-danger btn-circle">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
