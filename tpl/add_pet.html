@@ -1,0 +1,114 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Pets</h1>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <i class="fas fa-plus fa-sm text-white-50"></i> Add Pet
+    </button>
+
+</div>
+
+<div id="pets_container" class="row">
+
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enter Pet info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form method="POST" action="rest/pets">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input name="name" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input name="age" type="number" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Adoptime</label>
+                        <input name="adopttime" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <input name="type" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <input name="gender" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input name="city" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Sterilizied</label>
+                        <input name="sterilized" type="text" class="form-control">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $.get( "rest/pets", function( data ) {
+        console.log(data);
+        $('#pets_container').html('');
+        for(var i=0 ; i < data.length; i++){
+            $('#pets_container').append(pet2html(data[i]));
+        }
+    });
+
+    function pet2html(pet){
+        var pet_html = $('#pet_template').html();
+        pet_html = pet_html.replace('{{Name}}', pet.Name);
+        pet_html = pet_html.replace('{{Age}}', pet.Age);
+        pet_html = pet_html.replace('{{Adopttime}}', pet.Adopttime);
+        pet_html = pet_html.replace('{{Type}}', pet.Type);
+        pet_html = pet_html.replace('{{City}}', pet.City);
+        pet_html = pet_html.replace('{{Gender}}', pet.Gender);
+        pet_html = pet_html.replace('{{Sterilized}}', pet.Sterilized);
+        return pet_html;
+    }
+</script>
+
+<script id="pet_template" type="html/template">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{Name}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Age: {{Age}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Adopttime: {{Adopttime}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Type: {{Type}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">City: {{City}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Gender: {{Gender}}</div>
+                        <div class="h7 mb-0 font-weight-bold text-gray-800">Sterilized: {{Sterilized}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" class="btn btn-warning btn-circle">
+                            <i class="fas fa-edit"></i>
+                        </a><br><br>
+                        <a href="#" class="btn btn-danger btn-circle">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

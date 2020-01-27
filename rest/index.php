@@ -8,7 +8,49 @@
  */
 
 require '../vendor/autoload.php';
-Flight::register('db', 'PDO', array('mysql:host=localhost:3306;dbname=pet_services','root',''));
+Flight::register('db', 'PDO', array('mysql:host=localhost:3306;dbname=pet_services','root','password'));
+
+/* CRUD for User */
+Flight::route('POST /create_user', function () {
+    $request = Flight::request();
+    $input = array(
+        "name" => $request->data->name,
+        "surname" => $request->data->surname,
+        "email" => $request->data->email,
+        "password" => $request->data->password,
+    );
+    Flight::db()->$query = "INSERT INTO users(name, 
+    surname, 
+    email, 
+    password)
+VALUES(:name, :surname, :email, :password)";
+$statement = $this->pdo->prepare($query);
+$stmt= Flight::db()->prepare($insert);
+        $stmt->execute($request);
+        Flight::json(['message' => "User ".$request['email']." has been added successfully"]);
+    }
+});
+
+Flight::route('POST /login', function(){
+    $request = Flight::request();
+    $db_user = Flight::pm()->get_user_by_email($request->data->email);
+    print_r($db_user['password']);
+    if ($db_user){
+        if ($db_user['password'] == $request->data->password){
+            unset($db_user['password']);
+            $token = ["user" => $db_user, "iat" => time(), "exp" => time() + 3600];
+            $jwt = JWT::encode($token, Config::JWT_SECRET);
+            $db_user['token'] = $jwt;
+            Flight::json($db_user);
+        }else{
+            Flight::halt(400, Flight::json(['message' => 'Invalid password for email address '. $request->data->email]));
+        }
+    }else{
+        Flight::halt(400, Flight::json(['message' => 'Invalid email address']));
+    }
+});
+
+
 
 
 Flight::route('GET /services', function(){
