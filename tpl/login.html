@@ -1,100 +1,32 @@
-<!DOCTYPE html>
-<!--suppress JSUnresolvedLibraryURL -->
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Login</title>
-
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-      integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX"
-      crossorigin="anonymous"
-    />
-
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <!-- Bootstrap core CSS -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Material Design Bootstrap -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css"
-      rel="stylesheet"
-    />
-
-    <!-- JQuery -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
-    ></script>
-    <!-- Bootstrap tooltips -->
-    <!--suppress JSUnresolvedLibraryURL -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"
-    ></script>
-    <!-- Bootstrap core JavaScript -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"
-    ></script>
-    <!-- MDB core JavaScript -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"
-    ></script>
-  </head>
-  <body style="background-color: #00BFFF">
-    <div class="container">
-      <!-- Grid column -->
-      <div class="row">
-        <div class="col-md-4 offset-md-4">
-          <br /><br /><br />
-          <div class="card">
-            <div class="card-body">
-              <h3 class="text-center default-text py-3">
-                <i class="fa fa-lock"></i> Login
-              </h3>
-              <!--Body-->
-              <div class="md-form">
-                <i class="fa fa-envelope prefix grey-text"></i>
-                <input
-                  type="text"
-                  id="defaultForm-email"
-                  class="form-control"
-                  placeholder="Email"
-                />
-                <label for="defaultForm-email"></label>
-              </div>
-              <div class="md-form">
-                <i class="fa fa-lock prefix grey-text"></i>
-                <input
-                  type="password"
-                  id="defaultForm-pass"
-                  class="form-control"
-                  placeholder="Password"
-                />
-                <label for="defaultForm-pass"></label>
-              </div>
-              <div class="text-center">
-                <button class="btn btn-default waves-effect waves-light">
-                  Login
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+<div
+  class="modal fade"
+  id="myModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        LOGIN
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</div>

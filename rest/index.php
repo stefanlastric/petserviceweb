@@ -8,10 +8,16 @@
  */
 
 require '../vendor/autoload.php';
-Flight::register('db', 'PDO', array('mysql:host=localhost:3306;dbname=pet_services','root','password'));
+require_once 'Config.class.php';
+Flight::register('db', 'PDO', [Config::DB]);
 
 /* CRUD for User */
-Flight::route('POST /create_user', function () {
+Flight::route('/', function(){
+    echo 'hello world!';
+});
+
+/* CRUD for User */
+Flight::route('POST /create_user', function() {
     $request = Flight::request();
     $input = array(
         "name" => $request->data->name,
@@ -28,8 +34,7 @@ $statement = $this->pdo->prepare($query);
 $stmt= Flight::db()->prepare($insert);
         $stmt->execute($request);
         Flight::json(['message' => "User ".$request['email']." has been added successfully"]);
-    }
-});
+    });
 
 Flight::route('POST /login', function(){
     $request = Flight::request();
@@ -55,7 +60,12 @@ Flight::route('POST /login', function(){
 
 Flight::route('GET /services', function(){
     $service = Flight::db()->query('SELECT * FROM services', PDO::FETCH_ASSOC)->fetchAll();
-    Flight::json($service);
+    try {
+        Flight::json($service);
+    } catch (\Throwable $th) {
+        echo 'tes';
+    }
+    
 });
 Flight::route('GET /pets', function(){
     $pet = Flight::db()->query('SELECT * FROM pets', PDO::FETCH_ASSOC)->fetchAll();

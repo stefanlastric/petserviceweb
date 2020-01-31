@@ -68,7 +68,7 @@
               <!--Body-->
              
 
-              <form class="form" id="register-form" method="" action="">
+              <form class="form" id="register-form" method="" action="POST">
                 <div class="form-group has-default bmd-form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -172,7 +172,7 @@
     (function($) {
       function processForm(e) {
         $.ajax({
-          url: 'rest/create_user',
+          url: '/create_user',
           dataType: 'text',
           type: 'post',
           contentType: 'application/x-www-form-urlencoded',
